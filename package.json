@@ -1,0 +1,31 @@
+{
+  "name": "temp-mail-detector",
+  "version": "0.1.0",
+  "description": "A node module to detect temporary email addresses",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "node_modules/typescript/bin/tsc --watch",
+    "start": "nodemon dist/index.js",
+    "test": "jest",
+    "coverage": "jest --coverage"
+  },
+  "keywords": [
+    "temp-mail",
+    "disposable emails",
+    "detector"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IkechukwuAKalu/temp-mail-detector.git"
+  },
+  "author": "Ikechukwu Kalu",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/node": "^12.7.12",
+    "jest": "^24.9.0",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {}
+}
