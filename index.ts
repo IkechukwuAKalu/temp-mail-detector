@@ -1,6 +1,6 @@
-import WebService from "./webservice";
-import knownHosts from "./hostnames";
-import { log } from "./utils";
+import WebService from "./lib/webservice";
+import knownHosts from "./lib/hostnames";
+import { log } from "./lib/utils";
 
 export async function isTempMail(email: string): Promise<boolean> {
   try {

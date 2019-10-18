@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node_modules/typescript/bin/tsc --watch",
     "start": "nodemon dist/index.js",
-    "test": "jest",
+    "test": "jest --watchAll",
     "coverage": "jest --coverage"
   },
   "keywords": [
@@ -24,6 +24,7 @@
     "@types/jest": "^24.0.19",
     "@types/node": "^12.7.12",
     "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   },
