@@ -4,7 +4,14 @@
     "module": "commonjs",
     "outDir": "./dist",
     "strict": true,
-    "rootDirs": ["lib"],
     "esModuleInterop": true
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "__tests__"
+  ],
+  "include": [
+    "lib",
+    "index.ts"
+  ]
 }
