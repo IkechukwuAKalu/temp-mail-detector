@@ -3,21 +3,21 @@ import { isHttps, log, ENVS } from "../../lib/utils";
 describe("/lib/utils.ts", () => {
   describe("#log()", () => {
     let currentEnv: string | undefined;
+    let spy: jest.SpyInstance;
 
     beforeAll(() => {
       // Keep track of the current env
       currentEnv = process.env.NODE_ENV;
       // Mock the console
-      jest.spyOn(global.console, "log")
-        .mockImplementation((message) => {
-          // Do not display anything
-        });
+      spy = jest.spyOn(global.console, "log");
     });
 
     afterAll(() => {
       if (currentEnv) {
         // Set the env to its original state
         process.env.NODE_ENV = currentEnv;
+        // Clear the mock
+        spy.mockClear();
       }
     });
 
