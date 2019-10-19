@@ -9,7 +9,8 @@ describe("/lib/utils.ts", () => {
       // Keep track of the current env
       currentEnv = process.env.NODE_ENV;
       // Mock the console
-      spy = jest.spyOn(global.console, "log");
+      spy = jest.spyOn(global.console, "log")
+        .mockImplementation(message => null);
     });
 
     afterAll(() => {
