@@ -12,6 +12,11 @@ To run this project, you need the following software installed; `git`, `node` an
 - Build the project `npm run build`
 - Run the project `npm start`
 
+## Run Tests
+Tests have been included in this project to ensure everything works as expected.
+- To run tests for this project, `npm run test`
+- To generate a test coverage report, `npm run coverage`
+
 **NOTE:** The command, `npm run build`, enables Typescript watch on `.ts` files. To run the project, you have to open a new terminal session still at the project root directory.
 
 ====
