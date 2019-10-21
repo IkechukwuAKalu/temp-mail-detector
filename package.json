@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node_modules/typescript/bin/tsc --watch",
     "start": "nodemon dist/index.js",
-    "test": "jest --watchAll",
+    "test": "jest",
+    "test-watch": "jest --watchAll",
     "coverage": "jest --coverage"
   },
   "keywords": [
