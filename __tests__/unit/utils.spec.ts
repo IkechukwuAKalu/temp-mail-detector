@@ -24,7 +24,7 @@ describe("/lib/utils.ts", () => {
 
     test("Expect data to be logged in a non-production env", () => {
       const message = "This is some test in dev env";
-      log(message);
+      log(message, false);
       expect(console.log).toBeCalledWith(message);
     });
 
@@ -33,13 +33,6 @@ describe("/lib/utils.ts", () => {
       const message = "This is some test in dev env";
       log(message);
       expect(console.log).not.toBeCalledWith(message);
-    });
-
-    test("Expect data to be logged in a production env with override", () => {
-      process.env.NODE_ENV = ENVS.PROD;
-      const message = "This is some test in dev env";
-      log(message, true);
-      expect(console.log).toBeCalledWith(message);
     });
   });
 
