@@ -9,6 +9,7 @@ export default {
     "tempail.com",
     "zomro.com",
     "guerrillamail.com",
-    "namesilo.com"
+    "namesilo.com",
+    "yopmail.com"
   ])
 };
