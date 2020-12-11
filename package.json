@@ -1,6 +1,6 @@
 {
   "name": "temp-mail-detector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A node module to detect temporary email addresses",
   "main": "dist/index.js",
   "scripts": {
