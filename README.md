@@ -1,12 +1,11 @@
 # Temp Mail Detector
-[![CI](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/temp-mail-detector.svg)](https://badge.fury.io/js/temp-mail-detector)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml) [![npm version](https://badge.fury.io/js/temp-mail-detector.svg)](https://badge.fury.io/js/temp-mail-detector) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A lightweight Node.js module to detect disposable and temporary email addresses to help prevent bot registrations and spam.
 
 ## Installation
+
 ```bash
 npm install temp-mail-detector
 ```
@@ -14,6 +13,7 @@ npm install temp-mail-detector
 ## Example Usage
 
 ### CommonJS (JavaScript)
+
 ```js
 const { isTempMail } = require("temp-mail-detector");
 
@@ -24,6 +24,7 @@ const { isTempMail } = require("temp-mail-detector");
 ```
 
 ### ES Modules / TypeScript
+
 ```ts
 import { isTempMail } from "temp-mail-detector";
 
@@ -62,4 +63,5 @@ To build and test the project locally:
   ```
 
 ## License
+
 MIT © [Ikechukwu Kalu](https://github.com/IkechukwuAKalu)
