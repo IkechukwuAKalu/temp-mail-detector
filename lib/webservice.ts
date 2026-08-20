@@ -7,19 +7,33 @@ export default class WebService {
   private domain: string;
   private ipAddress = "";
   private ipHostname = "";
+  private mxHostnames: string[] = [];
 
   constructor(email: string) {
-    // extract the domain name
-    const startIndex = email.indexOf("@") + 1;
-    this.domain = email.substring(startIndex);
+    if (typeof email !== "string") {
+      this.domain = "";
+      return;
+    }
+    const atIndex = email.lastIndexOf("@");
+    this.domain = atIndex !== -1 ? email.substring(atIndex + 1).trim().toLowerCase() : "";
   }
 
   /**
-   * Runs the initialization functions for the IP address and Hostname
+   * Runs the initialization functions for the IP address, Hostname, and MX records
    */
-  public async initValues() {
-    await this.initIPAddress();
-    await this.initIPHostname();
+  public async initValues(): Promise<void> {
+    if (!this.domain) return;
+    await Promise.all([
+      this.initIPAndHostname(),
+      this.initMxHostnames()
+    ]);
+  }
+
+  /**
+   * @returns the domain name
+   */
+  public getDomain(): string {
+    return this.domain;
   }
 
   /**
@@ -37,25 +51,45 @@ export default class WebService {
   }
 
   /**
-   * Initializes the domain's IP address
+   * @returns an array of resolved MX hostnames
    */
-  private async initIPAddress() {
+  public getMxHostnames(): string[] {
+    return this.mxHostnames;
+  }
+
+  /**
+   * Initializes the domain's IP address and reverse lookup hostname
+   */
+  private async initIPAndHostname(): Promise<void> {
+    if (!this.domain) return;
     try {
       const result = await dnsPromises.lookup(this.domain, 4);
-      this.ipAddress = result.address;
+      this.ipAddress = result.address || "";
+      if (this.ipAddress) {
+        try {
+          const serviceResult = await dnsPromises.lookupService(this.ipAddress, 80);
+          this.ipHostname = serviceResult.hostname || "";
+        } catch (serviceErr) {
+          log(serviceErr);
+        }
+      }
     } catch (err) {
       log(err);
     }
   }
 
   /**
-   * Initializes the IP address' hostname
+   * Initializes the domain's MX hostnames
    */
-  private async initIPHostname() {
+  private async initMxHostnames(): Promise<void> {
+    if (!this.domain) return;
     try {
-      if (!this.ipAddress) await this.initIPAddress();
-      const result = await dnsPromises.lookupService(this.ipAddress, 80);
-      this.ipHostname = result.hostname;
+      const mxRecords = await dnsPromises.resolveMx(this.domain);
+      if (Array.isArray(mxRecords)) {
+        this.mxHostnames = mxRecords
+          .map(r => (r.exchange || "").toLowerCase())
+          .filter(Boolean);
+      }
     } catch (err) {
       log(err);
     }

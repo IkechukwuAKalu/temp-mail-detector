@@ -1,40 +1,64 @@
 # Temp Mail Detector
-[![Build Status](https://travis-ci.org/IkechukwuAKalu/temp-mail-detector.svg?branch=master)](https://travis-ci.org/IkechukwuAKalu/temp-mail-detector)
+[![CI](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml/badge.svg)](https://github.com/IkechukwuAKalu/temp-mail-detector/actions/workflows/ci.yml)
 [![npm version](https://badge.fury.io/js/temp-mail-detector.svg)](https://badge.fury.io/js/temp-mail-detector)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This is a Node.js module to detect temporary email addresses. It helps developers prevent bots from creating multiple user accounts utilzing those addresses.
-
-This software is still being developed and updates will be published on this document. In the meantime, ideas and suggestions for improvements and fixes are welcome.
+A lightweight Node.js module to detect disposable and temporary email addresses to help prevent bot registrations and spam.
 
 ## Installation
-To install this package, run `npm install --save temp-mail-detector` or `npm i -S temp-mail-detector`
+```bash
+npm install temp-mail-detector
+```
 
 ## Example Usage
-The code below shows how to use this package to detect temporary email addresses
-```js
-const detector = require("temp-mail-detector");
 
-(async function() {
-  const email = "lixawelat@imaild.com";
-  const result = await detector.isTempMail(email);
-  console.log(result); // returns true or false
+### CommonJS (JavaScript)
+```js
+const { isTempMail } = require("temp-mail-detector");
+
+(async () => {
+  const isTemp = await isTempMail("lixawelat@imaild.com");
+  console.log(isTemp); // true or false
 })();
 ```
 
-## Run from Source
-To run this project, you need the following software installed; `git`, `node` and `npm`. NPM usually comes bundled together in the Node.Js installer. After you have installed them, follow the steps below to run this project.
+### ES Modules / TypeScript
+```ts
+import { isTempMail } from "temp-mail-detector";
 
-- Clone the project `git clone https://github.com/IkechukwuAKalu/temp-mail-detector.git`
-- Navigate to the project root directory in your terminal
-- Install dependencies `npm i`
-- Build the project `npm run build`
-- Run the project `npm start`
+async function checkEmail(email: string) {
+  const isTemp = await isTempMail(email);
+  if (isTemp) {
+    console.log("Disposable email detected!");
+  }
+}
+```
 
-**NOTE:** The command, `npm run build`, enables Typescript watch on `.ts` files. To run the project, you have to open a new terminal session still at the project root directory.
+## Development
 
-## Run Tests
-Tests have been included in this project to ensure everything works as expected.
-- To run tests for this project, `npm test` or `npm run test-watch` to watch files for modifications
-- To generate a test coverage report, `npm run coverage`
+To build and test the project locally:
 
-====
+- **Clone repository:**
+  ```bash
+  git clone https://github.com/IkechukwuAKalu/temp-mail-detector.git
+  cd temp-mail-detector
+  ```
+- **Install dependencies:**
+  ```bash
+  npm install
+  ```
+- **Build project:**
+  ```bash
+  npm run build
+  ```
+- **Run tests:**
+  ```bash
+  npm test
+  ```
+- **Generate test coverage:**
+  ```bash
+  npm run coverage
+  ```
+
+## License
+MIT © [Ikechukwu Kalu](https://github.com/IkechukwuAKalu)

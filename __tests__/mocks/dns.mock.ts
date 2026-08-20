@@ -1,6 +1,3 @@
-// Jest requires this to skip this file during testing
-test.skip("skip", () => {});
-
 export const addressPairs = [
   {
     address: "192.168.43.1",
@@ -19,15 +16,34 @@ export const addressPairs = [
 export default {
   promises: {
     // Returns the IP address for a hostname
-    lookup: async (domain: string, family: 4 | 6): Promise<Object> => {
+    lookup: async (domain: string, family?: number): Promise<{ address: string; family: number }> => {
       const addressPair = addressPairs.find(ap => ap.hostname === domain);
-      return addressPair || {};
+      if (addressPair) {
+        return { address: addressPair.address, family: 4 };
+      }
+      throw new Error(`ENOTFOUND ${domain}`);
     },
 
     // Returns the hostname for an IP address
-    lookupService: async (ipAddress: string, port: number): Promise<Object> => {
+    lookupService: async (ipAddress: string, port: number): Promise<{ hostname: string; service: string }> => {
       const addressPair = addressPairs.find(ap => ap.address === ipAddress);
-      return addressPair || {};
+      if (addressPair) {
+        return { hostname: addressPair.hostname, service: "http" };
+      }
+      throw new Error(`ENOTFOUND ${ipAddress}`);
+    },
+
+    // Returns MX records for a domain
+    resolveMx: async (domain: string): Promise<{ exchange: string; priority: number }[]> => {
+
+
+      const addressPair = addressPairs.find(ap => ap.hostname === domain);
+      if (addressPair) {
+        return [{ exchange: `mail.${addressPair.hostname}`, priority: 10 }];
+      }
+      return [];
     }
   }
-}
+};
+
+

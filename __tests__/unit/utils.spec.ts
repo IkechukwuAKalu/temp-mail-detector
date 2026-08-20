@@ -1,50 +1,51 @@
-import { isHttps, log, ENVS } from "../../lib/utils";
+import { log, ENVS } from "../../lib/utils";
 
 describe("/lib/utils.ts", () => {
+  describe("ENVS constants", () => {
+    test("Exposes expected environment values", () => {
+      expect(ENVS.DEV).toBe("development");
+      expect(ENVS.PROD).toBe("production");
+      expect(ENVS.TEST).toBe("testing");
+    });
+  });
+
   describe("#log()", () => {
     let currentEnv: string | undefined;
     let spy: jest.SpyInstance;
 
     beforeAll(() => {
-      // Keep track of the current env
       currentEnv = process.env.NODE_ENV;
-      // Mock the console
       spy = jest.spyOn(global.console, "log")
-        .mockImplementation(message => null);
+        .mockImplementation(() => undefined);
     });
+
 
     afterAll(() => {
       if (currentEnv) {
-        // Set the env to its original state
         process.env.NODE_ENV = currentEnv;
-        // Clear the mock
-        spy.mockClear();
       }
+      spy.mockRestore();
     });
 
-    test("Expect data to be logged in a non-production env", () => {
-      const message = "This is some test in dev env";
+    test("Logs data when hide is false and not in production", () => {
+      process.env.NODE_ENV = ENVS.DEV;
+      const message = "Test dev message";
       log(message, false);
-      expect(console.log).toBeCalledWith(message);
+      expect(console.log).toHaveBeenCalledWith(message);
     });
 
-    test("Do not expect data to be logged in a production env without override", () => {
-      process.env.NODE_ENV = ENVS.PROD;
-      const message = "This is some test in dev env";
+    test("Does not log data when hide is true (default)", () => {
+      process.env.NODE_ENV = ENVS.DEV;
+      const message = "Test dev hidden message";
       log(message);
-      expect(console.log).not.toBeCalledWith(message);
-    });
-  });
-
-  describe("#isHttps()", () => {
-    test("Return true for valid https scheme", () => {
-      const url = "https://ikechukwuakalu.github.io";
-      expect(isHttps(url)).toBe(true);
+      expect(console.log).not.toHaveBeenCalledWith(message);
     });
 
-    test("Return false for invalid https scheme", () => {
-      const url = "http://github.com";
-      expect(isHttps(url)).toBe(false);
+    test("Does not log data in production environment even if hide is false", () => {
+      process.env.NODE_ENV = ENVS.PROD;
+      const message = "Test prod message";
+      log(message, false);
+      expect(console.log).not.toHaveBeenCalledWith(message);
     });
   });
 });

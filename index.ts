@@ -9,14 +9,36 @@ import { log } from "./lib/utils";
  */
 export async function isTempMail(email: string): Promise<boolean> {
   try {
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return false;
+    }
     const service = new WebService(email);
     await service.initValues();
-    const ipHostname = service.getIPHostname();
-    const hostname = hostnames.getHostnames()
-      .find(kh => (new RegExp(kh, "ig").test(ipHostname)));
-    return Boolean(hostname);
+
+    const candidates = [
+      service.getDomain(),
+      service.getIPHostname(),
+      ...service.getMxHostnames()
+    ].filter(Boolean).map(h => h.toLowerCase());
+
+    if (candidates.length === 0) {
+      return false;
+    }
+
+    const knownHosts = hostnames.getHostnames().map(h => h.toLowerCase());
+
+    const matched = knownHosts.find(kh =>
+      candidates.some(candidate =>
+        candidate === kh ||
+        candidate.endsWith(`.${kh}`) ||
+        candidate.includes(kh)
+      )
+    );
+
+    return Boolean(matched);
   } catch (err) {
     log(err);
     return false;
   }
 }
+
